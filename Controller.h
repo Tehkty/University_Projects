@@ -1,10 +1,3 @@
-//DOM-GGMS-Controller.h - Projeto Domino - Etapa 6
-//03/09/24 - Grupo: GGMS
-//Gabriel Azevedo Cruz 
-//Giulia Meninel Mattedi
-//Matheus Gomes Costa Castanho Giacomini
-//Sthefany Viveiros Cordeiro
-
 void jogo();
 void fEmbaralha(tipopeca pecas[28]);
 void iniciarJogo();
@@ -21,4 +14,3 @@ void mostrarPecasPossiveis(tipopeca jogador1[], tipopeca jogador2[], char jogado
 void recuperaCadastro();
 void gravaCadastro();
 int Computador();
-
