@@ -1,0 +1,149 @@
+//DOM-GGMS-View.cpp - Projeto Domino - Etapa 6
+//03/09/24 - Grupo: GGMS
+//Gabriel Azevedo Cruz 
+//Giulia Meninel Mattedi
+//Matheus Gomes Costa Castanho Giacomini
+//Sthefany Viveiros Cordeiro
+
+#include "DOM_GGMS_View.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+void fMostra(tipopeca pecas[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("[%d|%d] ", pecas[i].lado1, pecas[i].lado2);
+    }
+    printf("\n\n");
+}
+
+void mensagemSair()
+{
+	printf("-> Saindo do jogo.\n");
+}
+
+
+void mensagemOpInvalida()
+{
+	printf("-> Opcao invalida. Tente novamente.\n\n");
+}
+
+
+//void apresentarMesa() {
+//    printf("===========\n\n");
+//    printf("MESA: ");
+//    for (int i = 0; i < mesa.posicaoLivreMesa; i++) {
+//        printf("[%d|%d] ", mesa.pecasNaMesa[i].lado1, mesa.pecasNaMesa[i].lado2);
+//    }
+//    printf("\n\n==========\n");
+//}
+void apresentarMesa() {
+    printf("===========\n\n");
+    printf("MESA: ");
+    for (int i = 0; i < mesa.posicaoLivreMesa; i++) {
+        printf("[%d|%d] ", mesa.pecasNaMesa[i].lado1, mesa.pecasNaMesa[i].lado2);
+    }
+    printf("\n\n==========\n");
+
+    // Debug: Exibir o estado atual da mesa
+    //printf("Debug: posicaoLivreMesa = %d\n", mesa.posicaoLivreMesa);
+//    for (int i = 0; i < mesa.posicaoLivreMesa; i++) {
+//        printf("Debug: mesa.pecasNaMesa[%d] = [%d|%d]\n", i, mesa.pecasNaMesa[i].lado1, mesa.pecasNaMesa[i].lado2);
+    }
+    // Debug
+//    printf("Pecas do jogador 1:\n");
+//    for (int i = 0; i < 7; i++) {
+//        printf("[%d|%d] ", jogador1[i].lado1, jogador1[i].lado2);
+//    }
+//    printf("\n");
+//
+//    printf("Pecas do jogador 2:\n");
+//    for (int i = 0; i < 7; i++) {
+//        printf("[%d|%d] ", jogador2[i].lado1, jogador2[i].lado2);
+//    }
+//    printf("\n");
+//
+//    printf("Pecas no monte:\n");
+//    for (int i = 0; i < 14; i++) {
+//        printf("[%d|%d] ", monte[i].lado1, monte[i].lado2);
+//    }
+//    printf("\n");
+//}
+
+
+
+void mensagemMonteVazio(){
+    printf("-> Nao ha mais pecas no monte para comprar!");
+}
+
+int apresentarMenuGeral() {
+    int op;
+    printf("1 - Iniciar jogo (2 jogadores)\n");
+    printf("2 - Iniciar jogo (contra o computador)\n");
+    printf("3 - Retornar ao jogo interrompido\n");
+    printf("4 - Salvar o jogo\n");
+    printf("5 - Recuperar o jogo salvo\n");
+    printf("6 - Regras gerais\n");
+    printf("0 - Sair do programa\n");
+    printf("Opcao selecionada: ");
+    scanf("%d", &op);
+    system("cls");
+    return op;
+}
+
+
+void regrasGerais()
+{
+    printf("\nREGRAS GERAIS\n");
+    printf("\nINICIO = Cada jogador comeca com 7 pecas distribuidas aleatoriamente. ");
+    printf("Quem possuir a peca [6|6] inicia o jogo, mas caso ninguem a tenha, joga-se a dupla mais alta do leque.\n");
+
+    printf("\nORDEM DO JOGO = O jogo ocorre no sentido anti-horario, ");
+    printf("e as pecas devem ser posicionadas de acordo com os numeros das extremidades da mesa.\n");
+
+    printf("\nCOMPRA DE PECAS = Antes de cada jogada, o jogador pode 'comprar' quantas pecas quiser ");
+    printf("do monte de pecas disponiveis, seja por necessidade ou blefe, ");
+    printf("mas perde aquele que terminar a partida com maior numero de pecas.\n");
+
+    printf("\nPASSAR A VEZ = Se um jogador nao puder jogar e nao houver mais pecas disponiveis para compra, ");
+    printf("ele passa a vez.\n");
+
+    printf("\nFIM DE JOGO = O jogo continua ate que sejam compradas todas as pecas do monte e, ");
+    printf("alem disso, um dos jogadores 'bater' seu leque [zerar suas pecas].\n");
+
+    printf("\nCASOS ESPECIAIS = Quando nao ha mais pecas para serem compradas, ");
+    printf("e nenhum dos jogadores consegue encaixar suas pecas nas extremidades, ");
+    printf("o vencedor sera determinado pela menor quantia de pecas em maos.\n\n");
+    
+}
+
+int apresentarSubMenu() {
+    char op2;
+    printf("-------------------\n");
+	printf(" j - fazer a jogada\n");
+	printf(" c - comprar pecas\n");
+	printf(" p - passar a vez\n");
+	printf(" s - sair (interromper o jogo)\n");
+	printf("\n-> Opcao selecionada: ");
+	limparBuffer();
+	scanf(" %c", &op2);
+	return op2; 
+}
+
+void apresentarMensagem(const char mens[100]){
+	printf("%s\n",mens);
+}
+
+void escanearLadoEscolhido()
+{
+	scanf(" %c", &ladoEscolhido);
+}
+
+void escanearEscolha()
+{
+	scanf(" %c", &escolha);
+}
+
+void apresentarPeca(char indice, int lado1, int lado2)
+{
+	printf(" %c. [%d|%d] ", indice, lado1, lado2);
+}
