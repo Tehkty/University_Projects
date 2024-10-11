@@ -1,10 +1,3 @@
-//DOM-GGMS-View.h - Projeto Domino - Etapa 6
-//03/09/24 - Grupo: GGMS
-//Gabriel Azevedo Cruz 
-//Giulia Meninel Mattedi
-//Matheus Gomes Costa Castanho Giacomini
-//Sthefany Viveiros Cordeiro
-
 void fMostra(tipopeca pecas[28]);
 void mensagemSair();
 void mensagemOpInvalida();
