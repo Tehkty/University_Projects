@@ -1,81 +1,37 @@
-//DOM-GGMS-View.cpp - Projeto Domino - Etapa 6
-//03/09/24 - Grupo: GGMS
-//Gabriel Azevedo Cruz 
-//Giulia Meninel Mattedi
-//Matheus Gomes Costa Castanho Giacomini
-//Sthefany Viveiros Cordeiro
-
 #include "DOM_GGMS_View.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-void fMostra(tipopeca pecas[], int n) {
+void fMostra(tipopeca pecas[], int n){
     for (int i = 0; i < n; i++) {
         printf("[%d|%d] ", pecas[i].lado1, pecas[i].lado2);
     }
     printf("\n\n");
 }
 
-void mensagemSair()
-{
+void mensagemSair(){
 	printf("-> Saindo do jogo.\n");
 }
 
 
-void mensagemOpInvalida()
-{
+void mensagemOpInvalida(){
 	printf("-> Opcao invalida. Tente novamente.\n\n");
 }
 
-
-//void apresentarMesa() {
-//    printf("===========\n\n");
-//    printf("MESA: ");
-//    for (int i = 0; i < mesa.posicaoLivreMesa; i++) {
-//        printf("[%d|%d] ", mesa.pecasNaMesa[i].lado1, mesa.pecasNaMesa[i].lado2);
-//    }
-//    printf("\n\n==========\n");
-//}
-void apresentarMesa() {
+void apresentarMesa(){
     printf("===========\n\n");
     printf("MESA: ");
     for (int i = 0; i < mesa.posicaoLivreMesa; i++) {
         printf("[%d|%d] ", mesa.pecasNaMesa[i].lado1, mesa.pecasNaMesa[i].lado2);
     }
     printf("\n\n==========\n");
-
-    // Debug: Exibir o estado atual da mesa
-    //printf("Debug: posicaoLivreMesa = %d\n", mesa.posicaoLivreMesa);
-//    for (int i = 0; i < mesa.posicaoLivreMesa; i++) {
-//        printf("Debug: mesa.pecasNaMesa[%d] = [%d|%d]\n", i, mesa.pecasNaMesa[i].lado1, mesa.pecasNaMesa[i].lado2);
-    }
-    // Debug
-//    printf("Pecas do jogador 1:\n");
-//    for (int i = 0; i < 7; i++) {
-//        printf("[%d|%d] ", jogador1[i].lado1, jogador1[i].lado2);
-//    }
-//    printf("\n");
-//
-//    printf("Pecas do jogador 2:\n");
-//    for (int i = 0; i < 7; i++) {
-//        printf("[%d|%d] ", jogador2[i].lado1, jogador2[i].lado2);
-//    }
-//    printf("\n");
-//
-//    printf("Pecas no monte:\n");
-//    for (int i = 0; i < 14; i++) {
-//        printf("[%d|%d] ", monte[i].lado1, monte[i].lado2);
-//    }
-//    printf("\n");
-//}
-
-
-
+}
+  
 void mensagemMonteVazio(){
     printf("-> Nao ha mais pecas no monte para comprar!");
 }
 
-int apresentarMenuGeral() {
+int apresentarMenuGeral(){
     int op;
     printf("1 - Iniciar jogo (2 jogadores)\n");
     printf("2 - Iniciar jogo (contra o computador)\n");
@@ -90,9 +46,7 @@ int apresentarMenuGeral() {
     return op;
 }
 
-
-void regrasGerais()
-{
+void regrasGerais(){
     printf("\nREGRAS GERAIS\n");
     printf("\nINICIO = Cada jogador comeca com 7 pecas distribuidas aleatoriamente. ");
     printf("Quem possuir a peca [6|6] inicia o jogo, mas caso ninguem a tenha, joga-se a dupla mais alta do leque.\n");
@@ -113,10 +67,9 @@ void regrasGerais()
     printf("\nCASOS ESPECIAIS = Quando nao ha mais pecas para serem compradas, ");
     printf("e nenhum dos jogadores consegue encaixar suas pecas nas extremidades, ");
     printf("o vencedor sera determinado pela menor quantia de pecas em maos.\n\n");
-    
 }
 
-int apresentarSubMenu() {
+int apresentarSubMenu(){
     char op2;
     printf("-------------------\n");
 	printf(" j - fazer a jogada\n");
@@ -133,17 +86,14 @@ void apresentarMensagem(const char mens[100]){
 	printf("%s\n",mens);
 }
 
-void escanearLadoEscolhido()
-{
+void escanearLadoEscolhido(){
 	scanf(" %c", &ladoEscolhido);
 }
 
-void escanearEscolha()
-{
+void escanearEscolha(){
 	scanf(" %c", &escolha);
 }
 
-void apresentarPeca(char indice, int lado1, int lado2)
-{
+void apresentarPeca(char indice, int lado1, int lado2){
 	printf(" %c. [%d|%d] ", indice, lado1, lado2);
 }
