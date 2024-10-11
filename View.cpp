@@ -1,4 +1,4 @@
-#include "DOM_GGMS_View.h"
+#include "View.h"
 #include <stdio.h>
 #include <stdlib.h>
 
