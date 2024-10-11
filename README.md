@@ -1,10 +1,4 @@
-# Domino em C++ (MVC)
+# University Projects
 
 2 semestre - Ciencia da computacao PUCSP
-
-Objetivo:
-- Jogo 1x1
-- Jogo contra Bot
-- Salvar o jogo
-- Recuperar jogo salvo
-- Retornar a um jogo interrompido
+Organizando meus arquivos :)
