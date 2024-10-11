@@ -1,5 +1,5 @@
-#include "DOM_GGMS_Model.cpp"
-#include "DOM_GGMS_Controller.cpp"
+#include "Model.cpp"
+#include "Controller.cpp"
 
 int main(){
 	fCriar(pecas);
