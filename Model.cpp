@@ -1,4 +1,4 @@
-#include "DOM_GGMS_Model.h"
+#include "Model.h"
 #include <stdlib.h>
 #include <stdbool.h>
 
