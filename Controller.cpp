@@ -1,22 +1,15 @@
-//DOM-GGMS-Controller.cpp - Projeto Domino - Etapa 6
-//03/09/24 - Grupo: GGMS
-//Gabriel Azevedo Cruz 
-//Giulia Meninel Mattedi
-//Matheus Gomes Costa Castanho Giacomini
-//Sthefany Viveiros Cordeiro
- 
-#include "DOM_GGMS_Controller.h"
-#include "DOM_GGMS_View.cpp"
+#include "Controller.h"
+#include "View.cpp"
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
- 
+
 void jogo(){
 	menuGeral();
 	iniciarJogo();   
 }
  
-void fEmbaralha(tipopeca pecas[28]) {
+void fEmbaralha(tipopeca pecas[28]){
     srand(time(NULL));
     for (int i = 0; i < 28; i++) {
         int j = rand() % 28;
@@ -26,7 +19,7 @@ void fEmbaralha(tipopeca pecas[28]) {
     }
 }
  
-void iniciarJogo() {
+void iniciarJogo(){
 	mesa.posicaoLivreMesa = 0;
     for (int i = 0; i < 28; i++) {
         mesa.pecasNaMesa[i].lado1 = -1;
@@ -38,25 +31,20 @@ void iniciarJogo() {
     jogoEmAndamento = 1;
 }
  
-void colocarPecaNaMesa(tipopeca peca) {
-    if (mesa.posicaoLivreMesa < 28) { //A mesa so pode ter 28 pecas, entao mesa.posicaoLivreMesa avalia se ha espaco para novas pecas
+void colocarPecaNaMesa(tipopeca peca){
+    if (mesa.posicaoLivreMesa < 28) { 
         peca.status = 'M';
-		mesa.pecasNaMesa[mesa.posicaoLivreMesa] = peca; //pecasNaMesa e' uma array de 28 slots (pecas). Se houver espaco, 'peca' e' adicionada a posicao de mesa.posicaoLivreMesa
-        mesa.posicaoLivreMesa++; //Depois de alocar espaco para uma peca, mesa.posicaoLivreMesa e' incrementada para disponibilizar uma proxima posicao 
+		mesa.pecasNaMesa[mesa.posicaoLivreMesa] = peca;
+        mesa.posicaoLivreMesa++;
     }
 }
 
- 
-void primeiroLance() {
+void primeiroLance(){
     int i, pj, dupla;
     pj = -1;
     dupla = -1;
     tipopeca pecaJogada;
- 
-    // Procurar a maior dupla:
-/* Se os lados da peca escolhida forem iguais, pj recebe o indice da peca e dupla, seu valor. A comparacao com -1 e' realizada para determinar se a dupla
-existe; caso nao exista, pj == -1, e o algoritmo passa a procurar a peca com a maior soma disponivel.
-*/
+
     for (i = 0; i < 7; i++) {
         if (jogador1[i].lado1 == jogador1[i].lado2 && jogador1[i].lado1 > dupla) {
             dupla = jogador1[i].lado1;
@@ -69,8 +57,7 @@ existe; caso nao exista, pj == -1, e o algoritmo passa a procurar a peca com a m
             jvez = 'j';
         }
     }
- 
-    // Se nao tiver dupla, procurar a peca com a maior soma
+
     if (pj == -1) {
         dupla = 0;
         for (i = 0; i < 7; i++) {
@@ -87,11 +74,9 @@ existe; caso nao exista, pj == -1, e o algoritmo passa a procurar a peca com a m
         }
     }
  
- /* Se jvez = 'J', pecaJogada (tipopeca) torna-se a peca de maior dupla/soma, e o numero de pecas do jogador 1 reduz em uma unidade. E vice-versa.
- */
     if (jvez == 'J') {
         pecaJogada = jogador1[pj];
-        jogador1[pj] = jogador1[numeroPecasDoJogador1 - 1]; // -1 peca do jogador
+        jogador1[pj] = jogador1[numeroPecasDoJogador1 - 1];
         numeroPecasDoJogador1--;
     } else {
         pecaJogada = jogador2[pj];
@@ -100,33 +85,25 @@ existe; caso nao exista, pj == -1, e o algoritmo passa a procurar a peca com a m
     }
  
     colocarPecaNaMesa(pecaJogada);
-    //apresentarMesa();
- 
-    //necessario para alternar as vezes dos jogadores.
+
     if (jvez == 'J') {
     	apresentarMensagem("-> Jogador 1 jogou. ");
     	apresentarMensagem("-> Vez do Jogador 2! \n");
     	apresentarMesa();
         jvez = 'j';
-        
-        
-        
-        
+ 
     } else {
     	apresentarMensagem("-> Jogador 2 jogou. ");
     	apresentarMensagem("-> Vez do Jogador 1! \n");
     	apresentarMesa();
         jvez = 'J';
-		
-        
-        
+
     }
  
-    atualizaPecas(jvez); // pecas de quem jogou
+    atualizaPecas(jvez);
     subMenu();
     system("cls");
 }
-
 
 void atualizaPecas(char jvez) {
     char indice;
@@ -134,11 +111,10 @@ void atualizaPecas(char jvez) {
     int i, j;
     
     if (jvez == 'J') {
-        indice = 'a'; // inicializa a ordem de rotulacao das pecas em letras alfabeticas para o jogador 1
+        indice = 'a';
         apresentarMensagem("\n -> Pecas do jogador 1:\n");
-        for (i = 0; i < numeroPecasDoJogador1; i++) { // pecas do jogador 1
+        for (i = 0; i < numeroPecasDoJogador1; i++) {
             pecaAtual = jogador1[i];
-            // Exibir peça, se não for [0|0] ou se já não houver outra peça [0|0] exibida
             if (pecaAtual.lado1 != 0 || pecaAtual.lado2 != 0) {
                 apresentarPeca(indice, pecaAtual.lado1, pecaAtual.lado2);
             } else {
@@ -158,11 +134,10 @@ void atualizaPecas(char jvez) {
         }
         apresentarMensagem("\n");
     } else {
-        indice = 'a'; // inicializa a ordem de rotulacao das pecas em letras alfabeticas para o jogador 2
+        indice = 'a';
         apresentarMensagem("\n -> Pecas do jogador 2:\n");
-        for (i = 0; i < numeroPecasDoJogador2; i++) { // pecas do jogador 2
+        for (i = 0; i < numeroPecasDoJogador2; i++) {
             pecaAtual = jogador2[i];
-            // Exibir peça, se não for [0|0] ou se já não houver outra peça [0|0] exibida
             if (pecaAtual.lado1 != 0 || pecaAtual.lado2 != 0) {
                 apresentarPeca(indice, pecaAtual.lado1, pecaAtual.lado2);
             } else {
@@ -184,7 +159,7 @@ void atualizaPecas(char jvez) {
     }
 }
 
-void fComprar(tipopeca monte[], int &numeroPecasNoMonte, tipopeca jogador1[], tipopeca jogador2[], int &numeroPecasDoJogador1, int &numeroPecasDoJogador2) {
+void fComprar(tipopeca monte[], int &numeroPecasNoMonte, tipopeca jogador1[], tipopeca jogador2[], int &numeroPecasDoJogador1, int &numeroPecasDoJogador2){
     if (numeroPecasNoMonte > 0) {
         tipopeca pecaComprada = monte[numeroPecasNoMonte - 1];
         if (jvez == 'J') {
@@ -213,12 +188,11 @@ void fComprar(tipopeca monte[], int &numeroPecasNoMonte, tipopeca jogador1[], ti
     }
 }
 
-void menuGeral() {
+void menuGeral(){
     int op;
 
     do {
         op = apresentarMenuGeral();
-
 
         if (jogador2EhComputador && jvez == 'j') {
             Computador(); 
@@ -267,14 +241,13 @@ void menuGeral() {
         }
     } while (op != 0);
 }
-
  
-void limparBuffer() {
+void limparBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void podeJogarOuNao() { 
+void podeJogarOuNao(){ 
     podeJogarJogador1 = 0; 
     podeJogarJogador2 = 0;
     
@@ -311,7 +284,7 @@ void podeJogarOuNao() {
 }
 }
 
-void subMenu() {
+void subMenu(){
     char op2;
 
     do {
@@ -422,14 +395,14 @@ void inverterPeca(tipopeca &peca) {
 
 void mostrarPecasPossiveis(tipopeca jogador1[], tipopeca jogador2[], char jvez) {
     int mesaE, mesaD;
-    int jogadaValida = 0; //nenhuma peca jogavel encontrada ainda
+    int jogadaValida = 0;
     char indice;
 
     if (mesa.posicaoLivreMesa > 0) {
         mesaE = mesa.pecasNaMesa[0].lado1;
         mesaD = mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2;
     } else {
-        mesaE = mesaD = -1; // mesa vazia
+        mesaE = mesaD = -1;
     }
 
     if (jvez == 'J') {
@@ -437,7 +410,7 @@ void mostrarPecasPossiveis(tipopeca jogador1[], tipopeca jogador2[], char jvez) 
         for (int i = 0; i < numeroPecasDoJogador1; i++) {
             if (jogador1[i].lado1 == mesaE || jogador1[i].lado2 == mesaE || 
                 jogador1[i].lado1 == mesaD || jogador1[i].lado2 == mesaD) {
-                if (!jogadaValida) //se uma peca valida for encontrada, if (!jogadaValida) é verdadeiro pois !0 = 1 (verdadeiro)
+                if (!jogadaValida)
 				{
                     apresentarMensagem("\n -> Pecas Possiveis do Jogador 1: \n");
                 }
@@ -468,7 +441,7 @@ void mostrarPecasPossiveis(tipopeca jogador1[], tipopeca jogador2[], char jvez) 
     apresentarMensagem("\n");
 }
 
-void vencedor() {
+void vencedor(){
     if (numeroPecasDoJogador1 == 0) {
     	apresentarMesa();
         apresentarMensagem("---> FIM: Jogador 1 Venceu! ;D ");
@@ -480,8 +453,7 @@ void vencedor() {
     }
 }
 
-
-void jogada() {
+void jogada(){
     tipopeca pecaEscolhida;
     int indicePecaEscolhida;
 
@@ -522,7 +494,6 @@ void jogada() {
         }
     }
     
-    
     int ladoMesaEsquerda = mesa.pecasNaMesa[0].lado1; 
     int ladoMesaDireita = mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2; 
 
@@ -538,7 +509,6 @@ void jogada() {
                 inverterPeca(pecaEscolhida);
             }
 
-            // peca vai pra direita pra abrir espaco pra outras pecas
             for (int i = mesa.posicaoLivreMesa; i > 0; i--) { 
                 mesa.pecasNaMesa[i] = mesa.pecasNaMesa[i - 1];
             }
@@ -561,7 +531,6 @@ void jogada() {
             inverterPeca(pecaEscolhida);
         }
 
-        // peca vai pra direita pra abrir espaco pra outras pecas
         for (int i = mesa.posicaoLivreMesa; i > 0; i--) {
             mesa.pecasNaMesa[i] = mesa.pecasNaMesa[i - 1];
         }
@@ -580,12 +549,10 @@ void jogada() {
     }
     
     system("cls");
-    //apresentarMesa();
 
     vencedor();
     podeJogarOuNao();
 
-    // troca vez
     if (jvez == 'J') {
         jvez = 'j';
         apresentarMensagem("\n-> Jogador 1 jogou!\n-> Vez do Jogador 2\n");
@@ -599,9 +566,7 @@ void jogada() {
     atualizaPecas(jvez);
 }
 
-
-
-void gravaCadastro() { 
+void gravaCadastro(){ 
     int i;
     FILE *fp, *fpm, *fps;
     
@@ -614,7 +579,6 @@ void gravaCadastro() {
         return;
     }
 
-    
     for (i = 0; i < 28; i++) {
         if (fwrite(&pecas[i], sizeof(tipopeca), 1, fp) != 1) {
             apresentarMensagem("Erro na cad domino gravaCadastro");
@@ -625,7 +589,6 @@ void gravaCadastro() {
         }
     }
 
-    
     sitJogo.qtMesaJogo = mesa.posicaoLivreMesa;
     for (i = 0; i < sitJogo.qtMesaJogo; i++) {
         if (fwrite(&mesa.pecasNaMesa[i], sizeof(tipopeca), 1, fpm) != 1) {
@@ -673,7 +636,7 @@ void gravaCadastro() {
 }
 
 
-void recuperaCadastro() { 
+void recuperaCadastro(){ 
     int i;
     FILE *fp, *fpm, *fps;
 	
@@ -697,7 +660,6 @@ void recuperaCadastro() {
         fclose(fpm);
         return;
     }
-
     
     for (i = 0; i < 28; i++) {
         if (fread(&pecas[i], sizeof(tipopeca), 1, fp) != 1) {
@@ -708,7 +670,6 @@ void recuperaCadastro() {
             return;
         }
     }
-
     
     if (fread(&sitJogo, sizeof(Jogo), 1, fps) != 1) {
         apresentarMensagem("Erro jogo CAD_JOGO recuperaCadastro");
@@ -717,7 +678,6 @@ void recuperaCadastro() {
         fclose(fps);
         return;
     }
-
    
     mesa.posicaoLivreMesa = sitJogo.qtMesaJogo;
     for (i = 0; i < mesa.posicaoLivreMesa; i++) {
@@ -729,7 +689,6 @@ void recuperaCadastro() {
             return;
         }
     }
-
     
     mesa.mesaD = sitJogo.mesaDJogo;
     mesa.mesaE = sitJogo.mesaEJogo;
@@ -762,12 +721,11 @@ void recuperaCadastro() {
     subMenu();
 }
 
-/*int Computador() {
-    int jogou = 0;  // Variável para verificar se o computador já jogou
+int Computador(){
+    int jogou = 0;
     do {
         podeJogarOuNao();
 
-        // Condições para passar o turno ou comprar
         if ((numeroPecasDoJogador2 == 0) && (numeroPecasNoMonte == 0)) {
             jvez = (jvez == 'J') ? 'j' : 'J';
             apresentarMensagem("\n-> Jogador passou o turno.\n");
@@ -786,124 +744,18 @@ void recuperaCadastro() {
             return 0;
         }
 
-        // Tentativa de jogar uma peça
         for (int i = 0; i < numeroPecasDoJogador2; i++) {
-            if (jogador2[i].status == 'j') { // Verifica se a peça está disponível
+            if (jogador2[i].status == 'j') {
 
-                // Verifica o lado direito da mesa
                 if ((jogador2[i].lado1 == mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2) || 
                     (jogador2[i].lado2 == mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2)) {
-
-                    // Inverte a peça se necessário
+			
                     if (jogador2[i].lado2 == mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2) {
                         int temp = jogador2[i].lado1;
                         jogador2[i].lado1 = jogador2[i].lado2;
                         jogador2[i].lado2 = temp;
                     }
 
-                    // Joga a peça na mesa
-                    mesa.pecasNaMesa[mesa.posicaoLivreMesa] = jogador2[i];
-                    mesa.pecasNaMesa[mesa.posicaoLivreMesa].status = 'M'; // Marca como jogada
-                    jogador2[i].status = 'M'; // Atualiza status da peça
-                    mesa.posicaoLivreMesa++;
-                    numeroPecasDoJogador2--; // Atualiza o número de peças do jogador
-                    jogou = 1;  // Indica que o computador jogou
-                    break;  // Sai do loop
-                }
-
-                // Verifica o lado esquerdo da mesa
-                else if ((jogador2[i].lado1 == mesa.pecasNaMesa[0].lado1) || 
-                         (jogador2[i].lado2 == mesa.pecasNaMesa[0].lado1)) {
-
-                    // Inverte a peça se necessário
-                    if (jogador2[i].lado1 == mesa.pecasNaMesa[0].lado1) {
-                        int temp = jogador2[i].lado1;
-                        jogador2[i].lado1 = jogador2[i].lado2;
-                        jogador2[i].lado2 = temp;
-                    }
-
-                    // Move as peças para a direita antes de jogar
-                    for (int j = mesa.posicaoLivreMesa; j > 0; j--) {
-                        mesa.pecasNaMesa[j] = mesa.pecasNaMesa[j - 1];
-                    }
-
-                    // Joga a peça na mesa
-                    mesa.pecasNaMesa[0] = jogador2[i];
-                    mesa.pecasNaMesa[0].status = 'M'; // Marca como jogada
-                    jogador2[i].status = 'M'; // Atualiza status da peça
-                    mesa.posicaoLivreMesa++;
-                    numeroPecasDoJogador2--; // Atualiza o número de peças
-                    jogou = 1;  // Indica que o computador jogou
-                    break;  // Sai do loop
-                }
-            }
-        }
-
-        // Se o computador jogou, atualiza o status e passa a vez
-        if (jogou) {
-            jvez = 'J';  // Passa a vez para o jogador 1
-            system("cls");
-            apresentarMensagem("-> O computador jogou a peca: \n", );
-            apresentarMesa();
-            atualizaPecas('J');
-            subMenu();
-            return 0;  // Sai após a jogada
-        }
-
-        // Se não houver peça para jogar, pode comprar do monte ou passar a vez
-        if (!jogou && numeroPecasNoMonte > 0) {
-            apresentarMensagem("-> O computador esta comprando uma peça do monte!\n");
-            fComprar(monte, numeroPecasNoMonte, jogador1, jogador2, numeroPecasDoJogador1, numeroPecasDoJogador2);
-        } else {
-            apresentarMensagem("-> O computador nao pode jogar e passou a vez!\n");
-            jvez = 'J';  // Passa a vez
-            subMenu();
-            return 0;
-        }
-    } while (1);
-}
-*/
-
-int Computador() {
-    int jogou = 0;  // Variável para verificar se o computador já jogou
-    do {
-        podeJogarOuNao();
-
-        // Condições para passar o turno ou comprar
-        if ((numeroPecasDoJogador2 == 0) && (numeroPecasNoMonte == 0)) {
-            jvez = (jvez == 'J') ? 'j' : 'J';
-            apresentarMensagem("\n-> Jogador passou o turno.\n");
-            system("cls");
-            apresentarMesa();
-            atualizaPecas('J');
-            subMenu();
-            return 0;
-        }
-
-        if ((numeroPecasDoJogador2 == 0) && (numeroPecasNoMonte != 0)) {
-            fComprar(monte, numeroPecasNoMonte, jogador1, jogador2, numeroPecasDoJogador1, numeroPecasDoJogador2);
-            apresentarMesa();
-            atualizaPecas('J');
-            subMenu();
-            return 0;
-        }
-
-        // Tentativa de jogar uma peça
-        for (int i = 0; i < numeroPecasDoJogador2; i++) {
-            if (jogador2[i].status == 'j') { // Verifica se a peça está disponível
-
-                // Verifica o lado direito da mesa
-                if ((jogador2[i].lado1 == mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2) || 
-                    (jogador2[i].lado2 == mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2)) {
-
-                    // Inverte a peça se necessário
-                    if (jogador2[i].lado2 == mesa.pecasNaMesa[mesa.posicaoLivreMesa - 1].lado2) {
-                        int temp = jogador2[i].lado1;
-                        jogador2[i].lado1 = jogador2[i].lado2;
-                        jogador2[i].lado2 = temp;
-                    }
-
-                    // Verificação extra para evitar jogar a mesma peça (considerando lados invertidos)
                     bool ja_jogada = false;
                     for (int k = 0; k < mesa.posicaoLivreMesa; k++) {
                         if ((mesa.pecasNaMesa[k].lado1 == jogador2[i].lado1 && 
@@ -915,33 +767,28 @@ int Computador() {
                         }
                     }
 
-                    // Se a peça já foi jogada, continua o loop
                     if (ja_jogada) {
                         continue;
                     }
 
-                    // Joga a peça na mesa
                     mesa.pecasNaMesa[mesa.posicaoLivreMesa] = jogador2[i];
-                    mesa.pecasNaMesa[mesa.posicaoLivreMesa].status = 'M'; // Marca como jogada
-                    jogador2[i].status = 'M'; // Atualiza status da peça
+                    mesa.pecasNaMesa[mesa.posicaoLivreMesa].status = 'M';
+                    jogador2[i].status = 'M';
                     mesa.posicaoLivreMesa++;
-                    numeroPecasDoJogador2--; // Atualiza o número de peças do jogador
-                    jogou = 1;  // Indica que o computador jogou
-                    break;  // Sai do loop
+                    numeroPecasDoJogador2--;
+                    jogou = 1;
+                    break;
                 }
 
-                // Verifica o lado esquerdo da mesa
                 else if ((jogador2[i].lado1 == mesa.pecasNaMesa[0].lado1) || 
                          (jogador2[i].lado2 == mesa.pecasNaMesa[0].lado1)) {
 
-                    // Inverte a peça se necessário
                     if (jogador2[i].lado1 == mesa.pecasNaMesa[0].lado1) {
                         int temp = jogador2[i].lado1;
                         jogador2[i].lado1 = jogador2[i].lado2;
                         jogador2[i].lado2 = temp;
                     }
 
-                    // Verificação extra para evitar jogar a mesma peça (considerando lados invertidos)
                     bool ja_jogada = false;
                     for (int k = 0; k < mesa.posicaoLivreMesa; k++) {
                         if ((mesa.pecasNaMesa[k].lado1 == jogador2[i].lado1 && 
@@ -953,55 +800,43 @@ int Computador() {
                         }
                     }
 
-                    // Se a peça já foi jogada, continua o loop
                     if (ja_jogada) {
                         continue;
                     }
 
-                    // Move as peças para a direita antes de jogar
                     for (int j = mesa.posicaoLivreMesa; j > 0; j--) {
                         mesa.pecasNaMesa[j] = mesa.pecasNaMesa[j - 1];
                     }
 
-                    // Joga a peça na mesa
                     mesa.pecasNaMesa[0] = jogador2[i];
-                    mesa.pecasNaMesa[0].status = 'M'; // Marca como jogada
-                    jogador2[i].status = 'M'; // Atualiza status da peça
+                    mesa.pecasNaMesa[0].status = 'M';
+                    jogador2[i].status = 'M';
                     mesa.posicaoLivreMesa++;
-                    numeroPecasDoJogador2--; // Atualiza o número de peças
-                    jogou = 1;  // Indica que o computador jogou
-                    break;  // Sai do loop
+                    numeroPecasDoJogador2--;
+                    jogou = 1;
+                    break;
                 }
             }
         }
 
-        // Se o computador jogou, atualiza o status e passa a vez
         if (jogou) {
-            jvez = 'J';  // Passa a vez para o jogador 1
+            jvez = 'J';
             system("cls");
             apresentarMensagem("-> O computador jogou uma peca. \n");
             apresentarMesa(); 
             atualizaPecas('J');
             subMenu();
-            return 0;  // Sai após a jogada
+            return 0;
         }
 
-        // Se não houver peça para jogar, pode comprar do monte ou passar a vez
         if (!jogou && numeroPecasNoMonte > 0) {
             apresentarMensagem("-> O computador está comprando uma peça do monte!\n");
             fComprar(monte, numeroPecasNoMonte, jogador1, jogador2, numeroPecasDoJogador1, numeroPecasDoJogador2);
         } else {
             apresentarMensagem("-> O computador não pode jogar e passou a vez!\n");
-            jvez = 'J';  // Passa a vez
+            jvez = 'J';
             subMenu();
             return 0;
         }
     } while (1);
 }
-
-
-
-
-
-
-
