@@ -1,5 +1,3 @@
 # University Projects
 
-2 semestre - Ciencia da computacao PUCSP
-.
-Organizando meus arquivos :)
+Organizando meus estudos/arquivos feitos durante a facul
