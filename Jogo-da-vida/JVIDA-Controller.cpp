@@ -1,11 +1,5 @@
-//JVIDA-GGMS - Projeto Jogo da Vida - Etapa 4
-//Gabriel Azevedo Cruz
-//Giulia Meninel Mattedi
-//Matheus Gomes Costa Castanho Giacomini
-//Sthefany Viveiros Cordeiro
-
-#include "JVIDA-GGMS-Controller.h"
-#include "JVIDA-GGMS-View.cpp"
+#include "JVIDA-Controller.h"
+#include "JVIDA-View.cpp"
 #include <stdio.h>
 
 void menu() {
