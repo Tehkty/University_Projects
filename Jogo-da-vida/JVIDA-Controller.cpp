@@ -24,19 +24,18 @@ void menu() {
                 iniciarProcesso();
                 break;
             case 6:
-                // apresenta lista
+            	carregaConfig();
+                gravaCelulas();
                 break;
             case 7:
-                // grava uma geracao inicial
+            	carregaConfig();
+                escolheGravacao();
                 break;
             case 8:
-                // recupera uma geracao inicial cadastrada
+                limpaGeracoes();
                 break;
             case 9:
-                // limpa cadastro
-                break;
-            case 10:
-                // regras gerais
+                regrasGerais();
                 break;
             case 0:
                 apresentarMensagem("Saindo...");
@@ -49,40 +48,6 @@ void menu() {
     } while(op != 0);
 }
 
-void matrizAux() {
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
-            int vizinhosVivos = calcVizinhos(i, j);
-
-            if (matriz[i][j] == 'O') {
-                // Verifica se a célula viva deve morrer
-                if (vizinhosVivos < 2 || vizinhosVivos > 3) {
-                    aux[i][j] = '.';
-                    excluiLVivo(i, j); // Remove da lista de vivas
-                } else {
-                    aux[i][j] = 'O';
-                }
-            } else {
-                // Verifica se uma célula morta deve nascer
-                if (vizinhosVivos == 3) {
-                    aux[i][j] = 'O';
-                    carregaVivo(i, j); // Adiciona à lista de vivas
-                } else {
-                    aux[i][j] = '.';
-                }
-            }
-        }    
-    }
-    atualizarMatriz(); // Atualiza a matriz com o novo estado
-}
-
-void atualizarMatriz() {
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
-            matriz[i][j] = aux[i][j];
-        }
-    }
-}
 
 void celulavivamorta() {
     for (int i = 0; i < dim; i++) {
@@ -133,10 +98,12 @@ void limparMapa() {
     }
     totvivo = 0; // Zera o contador de células vivas
 
-    atualizarMatriz();  // Atualiza a matriz após a limpeza
-    apresentaMapa();    // Atualiza o mapa na visualização
-}
+    // Resetar a geração atual
+    geracaoAtual = 1;
 
+    apresentarMensagem("Mapa limpo com sucesso. Adicione novas células para iniciar o processo.");
+    apresentaMapa(); // Atualiza o mapa na visualização
+}
 
 int calcVizinhos(int i, int j) {    
     int qt = 0;
@@ -202,4 +169,340 @@ void excluiLVivo(int ii, int jj) {
             totvivo--;
         }
     }
+}
+
+void gravaCelulas() {
+	int k,i,ni;
+	k= qtconf;
+	if(totvivo==0)
+	  return;
+	  
+	TipoCel *aux;
+	aux = pvivo;
+	ni=0;
+	do{
+			Lvivo.L[ni].lin = aux->lin;
+			Lvivo.L[ni].col = aux->col;
+			ni++;
+			aux = aux->next;
+	  }while(aux!=NULL);
+	Lvivo.dimensao = dim;
+	Lvivo.cont = totvivo;
+	LConfig[k].TL = Lvivo;
+	
+	FILE *fp;
+	if((fp = fopen("CONFIG_INIC","w"))==NULL)
+	{
+		apresentarMensagem("ERRO: O arquivo CONFIG_INIC nao pode ser aberto para gravacao");
+		return;
+	}
+	for(i = 0; i<=qtconf;i++)
+	{
+		if(fwrite(&LConfig[i],sizeof(TipoLista),1,fp)!=1)
+		{
+			apresentarMensagem("Erro na gravacao do arquivo CONFIG_INIC");
+			fclose(fp);
+			return;
+		}
+	}
+	fclose(fp);
+	qtconf++;
+	system("cls");
+	apresentarMensagem("Configuracao gravada OK");
+}
+
+void carregaConfig() {
+	int k;
+	FILE *fp;
+	if((fp = fopen("CONFIG_INIC","r"))!=NULL)
+	{
+		qtconf = 0;
+		k = 0;
+		while(!feof(fp))
+		{
+			if(fread(&LConfig[k],sizeof(TipoLista),1,fp)!=1)
+			{
+				fclose(fp);
+				return;
+			}
+			qtconf++;
+			k++;
+		}
+		fclose(fp);
+	}
+}
+
+
+// Em ultrecup temos a última recuperação realizada (ou -1 se nenhuma),
+// e agora interessa-nos a próxima.
+void recuperaCelulas() {
+	int i,j,k,ni;
+	TipoCel *aux;
+	if(qtconf==0)
+	{
+		apresentarMensagem("Nao existe configuracao a recuperar");
+		return;
+	}
+	k = ultrecup+1;
+	if(k>=qtconf)
+		k=0;
+	Lvivo = LConfig[k].TL;
+	ultrecup = k;
+	
+	clearListaMortos();
+	clearListaVivos();
+	dim = Lvivo.dimensao;
+	criarMatriz();
+	
+	for(ni=0;ni<Lvivo.cont;ni++)
+		carregaVivo(Lvivo.L[ni].lin,Lvivo.L[ni].col);
+		
+	if(totvivo>0)
+	{
+		aux = pvivo;
+		do
+		{
+			matriz[aux->lin][aux->col]='O';
+			aux = aux->next;
+		}while(aux!=NULL);
+		mortosVivos();
+		apresentaMapa();
+	}	
+}
+
+
+// Remove o arquivo de configurações iniciais
+void deletaConfig() {
+    if (remove("CONFIG_INIC") != 0) {
+        apresentarMensagem("ERRO: O arquivo CONFIG_INIC nao pode ser removido");
+        return;
+    }
+
+    qtconf = 0;
+    apresentarMensagem("O arquivo CONFIG_INIC foi removido OK");
+}
+
+
+void clearListaVivos()
+{
+	TipoCel *aux,*aux2;
+	if(totvivo>0)
+	{
+		aux = pvivo;
+	while(aux->next!=NULL)
+	{
+		aux2 = aux->next;
+		free(aux);
+		aux = aux2;
+	}
+	free(aux);
+	pvivo=NULL;
+	totvivo=0;
+	}
+}
+
+void clearListaMortos()
+{
+	TipoCel *aux,*aux2;
+	if(totmorto>0)
+	{
+		aux = pmorto;
+		while(aux->next!=NULL)
+		{
+		aux2 = aux->next;
+		free(aux);
+		aux = aux2;
+		}
+		free(aux);
+		pmorto = NULL;
+		totmorto=0;
+	}
+	
+}
+
+void vivosAtuais()
+{
+	for(int i = 1; i<=dim; i++)                   
+		for(int j = 1; j<=dim; j++)
+			if(matriz[i][j]=='O')
+				carregaVivo(i,j);
+}
+
+//funcao que verifica quais celulas sao mortas vizinhas
+void mortosVivos() {
+    TipoCel *auxant, *aux;
+    int i, j, m, c;
+
+    // Percorre a matriz para identificar vizinhos mortos
+    for (i = 0; i <= dim; i++) {
+        for (j = 0; j <= dim; j++) {
+            if (matriz[i][j] == 'O') { // Se é uma célula viva
+                for (int l = (i - 1); l <= (i + 1); l++) {
+                    for (int c = (j - 1); c <= (j + 1); c++) {
+                        // Verifica os limites da matriz
+                        if (l > 0 && l <= dim && c > 0 && c <= dim) {
+                            // Processa células mortas vizinhas, mas não exibe '+'
+                            if (matriz[l][c] != 'O' && matriz[l][c] != '+') {
+                                MortosVivosAtuais(l, c); // Adiciona à lista de vizinhos mortos
+                                if (mostrarMortosVizinhos) {
+                                    matriz[l][c] = '+'; // Marca '+' apenas se o flag estiver ativo
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+//funcao que coloca na lista dinamica as celulas mortas vizinhas atuais
+void MortosVivosAtuais(int ii, int jj)
+{
+	TipoCel* aux = (TipoCel*)malloc(sizeof(TipoCel));
+	if(aux==NULL)
+	{
+		apresentarMensagem("Sem espaco na memoria para inclusao de celula morta\n");
+		return;
+	}
+	aux->lin=ii;
+	aux->col=jj;
+	if(totmorto==0)
+	{
+		pmorto=aux;
+		pmorto->next=NULL;
+	}
+	else
+	{
+		aux->next=pmorto;
+		pmorto=aux;
+	}
+	totmorto++;
+}
+
+//funcao que coloca na lista dinamica as celulas vivas da proxima geracao
+void ProximoVivo(int ii, int jj)
+{
+	TipoCel* aux = (TipoCel*)malloc(sizeof(TipoCel));
+	if(aux==NULL)
+	{
+		apresentarMensagem("Sem espaco na memoria para inclusao de celula viva da proxima geracao\n");
+		return;
+	}
+	aux->lin=ii;
+	aux->col=jj;
+	if(totvivoprox==0)
+	{
+		pvivoprox=aux;
+		pvivoprox->next=NULL;
+	}
+	else
+	{
+		aux->next=pvivoprox;
+		pvivoprox=aux;
+	}
+	totvivoprox++;
+}
+
+//funcao que que calcula as celulas da proxima geracao e as coloca na matriz
+void proxGenMatriz()
+{
+	TipoCel *aux;
+	for(int i = 0; i<=dim; i++)
+		for(int j = 0; j<=dim; j++)
+			matriz[i][j] = '.';
+			
+	aux = pvivoprox;
+	while(totvivoprox>0)
+	{
+		matriz[aux->lin][aux->col]='O';
+		pvivoprox=aux->next;
+		free(aux);
+		aux = pvivoprox;
+		totvivoprox--;
+	}	
+}
+
+void Evolucao()
+{
+	int i, j;
+	int qtd = 0;
+	TipoCel *aux;
+	
+	for(i = 0; i<=dim; i++)                   
+			for(j = 0; j<=dim; j++)
+				for(int l = (i-1); l <=(i+1); l++)
+					for(int c = (j-1); c <=(j+1); c++)
+						if ((l != 0) && (l != (dim + 1)))
+							if ((c != 0) && (c != (dim + 1)))
+								if((matriz[i][j] == 'O') && (matriz[l][c] != 'O'))
+										matriz[l][c] = '+';
+
+	{
+		aux = pvivo;
+		while(totvivo>0)	                               
+		{
+			i= aux->lin; j=aux->col;
+			for(int l = (i-1); l <=(i+1); l++)
+				for(int c = (j-1); c <=(j+1); c++)
+					if ((l != 0) && (l != (dim + 1)))
+						if ((c != 0) && (c != (dim + 1)))
+							if(matriz[l][c] == 'O')
+								qtd ++;	
+		
+			if(qtd == 4|| qtd==3)  
+			        ProximoVivo(i,j);
+			pvivo = aux->next;
+			free(aux);
+			aux = pvivo;
+			totvivo--;
+			qtd=0;
+		}
+	
+	}
+	
+	aux=pmorto;
+		{
+			while(totmorto>0)	
+			{
+		 		i= aux->lin, j=aux->col;
+					for(int l = (i-1); l <=(i+1); l++)
+						for(int c = (j-1); c <=(j+1); c++)
+							if ((l != 0) && (l != (dim + 1)))
+								if ((c != 0) && (c != (dim + 1)))
+									if(matriz[l][c] == 'O')
+									qtd ++;				
+			
+			if(qtd ==3)
+				ProximoVivo(i,j);
+			pmorto=aux->next;
+			free(aux);
+			aux=pmorto;
+			totmorto--;
+			qtd=0;
+			}
+		}
+		
+		proxGenMatriz();
+		clearListaVivos();
+		clearListaMortos();
+		vivosAtuais();
+		mortosVivos();
+			
+}
+
+void limpaGeracoes()
+{
+	if(qtconf>0)
+	{
+		if(rconfirma("Confirma exclusao das configuracoes iniciais? ")==0)
+			return;
+	}
+	qtconf = 0;
+	ultrecup = -1;
+	deletaConfig();
+	limparMapa();
+	apresentarMensagem("O deposito de geracoes iniciais esta vazio");
+	
 }
