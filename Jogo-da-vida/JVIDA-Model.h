@@ -1,14 +1,10 @@
-void mapaInicial();
-void apresentaMapa();
-void colocarCelula();
-int apresentarMenuGeral();
-void perguntarMostrarMortosVizinhos();
-void apresentarMensagem(const char mens[100]);
-void evoluirJogo(int numGeracoes, int atraso);
-void iniciarProcesso();
-void mostraLvivo();
-void mostraLvizinhasMortas();
-int rconfirma(char pergunta[500]);
-void escolheGravacao();
-void criarMatriz();
-void regrasGerais();
+char matriz[60][60];
+
+int dim;
+bool mostrarMortosVizinhos = false;
+int geracaoAtual = 1;
+int qtconf;
+int ultrecup = -1;
+int totvivo, totmorto, totvivoprox;
+int geracao;
+int numGeracao;
