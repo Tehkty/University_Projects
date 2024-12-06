@@ -1,6 +1,14 @@
-char aux[60][60];
-char matriz[60][60];
-int dim; //dimensao a ser definida pelo operador
-bool mostrarMortosVizinhos = false;
-
-int totvivo, totmorto, totvivoprox;
+void mapaInicial();
+void apresentaMapa();
+void colocarCelula();
+int apresentarMenuGeral();
+void perguntarMostrarMortosVizinhos();
+void apresentarMensagem(const char mens[100]);
+void evoluirJogo(int numGeracoes, int atraso);
+void iniciarProcesso();
+void mostraLvivo();
+void mostraLvizinhasMortas();
+int rconfirma(char pergunta[500]);
+void escolheGravacao();
+void criarMatriz();
+void regrasGerais();
