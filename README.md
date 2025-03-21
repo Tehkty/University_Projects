@@ -1,3 +1,3 @@
 # University Projects
 
-Organizando meus estudos/arquivos feitos durante a facul
+These are my projects made during college 🎓
