@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=CadAlunos
+comment0.text=\ Atividade3\:\ Cadastro\ de\ alunos\r\nAlunos\:\ Giulia\ M.,\ Pedro\ H.,\ Sthefany\ V.,\ Tulio\ G.\r\n\r\nAplicacao\ para\ cadastro\ de\ alunos\r\n
+comment1.params=
+comment1.target=CadAlunos()
+comment1.text=\r\n\ Construtor\ CadAlunos\r\n\ @Inicializa\ o\ contador\ qtdAlunos\r\n\ @Inicializa\ Aluno\ com\ 100\ posicoes\ disponiveis\r\n
+comment2.params=mn
+comment2.target=boolean\ inserir(IMenu)
+comment2.text=\r\n\ Funcao\ inserir\r\n\ @Input\ para\ dados\ do\ aluno\r\n
+comment3.params=ra\ mn
+comment3.target=boolean\ remover(java.lang.String,\ IMenu)
+comment3.text=\r\n\ Funcao\ remover\ Aluno\r\n\ @Tira\ aluno\ da\ array\ e\ marca\ posicao\ como\ NULL\r\n
+comment4.params=
+comment4.target=java.lang.String\ listar()
+comment4.text=\r\n\ Retorna\ a\ lista\ das\ informacoes\ dos\ alunos\ cadastrados\r\n\ @return\ lista\ de\ alunos\ cadastrados\r\n
+comment5.params=
+comment5.target=java.lang.String\ toString()
+comment5.text=\r\n\ Retorna\ os\ atributos\ como\ string\r\n
+numComments=6
