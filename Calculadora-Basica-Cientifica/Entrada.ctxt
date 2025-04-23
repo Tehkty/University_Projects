@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Entrada
+comment0.text=\ Atividade1\:\ calculadora\ modo\ texto\ (console)/\ modo\ grsfico\ (janela)\r\n\ \ \ \ Alunos\:\ Giulia\ M.,\ Pedro\ H.,\ Sthefany\ V.,\ Tulio\ G.\r\n\ \ \ \ \r\n\ \ \ \ Classe\ responsavel\ por\ ler\ entradas\ do\ teclado.\r\n
+comment1.params=mensagem
+comment1.target=java.lang.String\ lerString(java.lang.String)
+comment1.text=\r\n\ M\u00E9todo\ lerString\ -\ le\ uma\ string\ pelo\ teclado\ e\ retorna\r\n\r\n\ @param\ mensagem\ Mesnsage\ na\ console\r\n\ @return\ s\ string\ lida\r\n
+numComments=2

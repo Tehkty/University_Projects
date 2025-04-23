@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=EntradaGrafica
+comment0.text=\ Atividade1\:\ calculadora\ modo\ texto\ (console)/\ modo\ grsfico\ (janela)\r\n\ \ \ \ Alunos\:\ Giulia\ M.,\ Pedro\ H.,\ Sthefany\ V.,\ Tulio\ G.\r\n\ \ \ \ \r\n\ \ \ \ Classe\ responsavel\ por\ ler\ entradas\ do\ teclado.\r\n
+comment1.params=msg
+comment1.target=java.lang.String\ lerString(java.lang.String)
+numComments=2

@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Aplicacao
+comment0.text=\ Atividade1\:\ calculadora\ modo\ texto\ (console)/\ modo\ grafico\ (janela)\r\n\ \ \ \ Alunos\:\ Giulia\ M.,\ Pedro\ H.,\ Sthefany\ V.,\ Tulio\ G.\r\n\ \ \ \ \r\n\ \ \ \ Solicita\ operandos\ e\ operadores\ ao\ usuario,\ processa\ os\ calculos\ e\ exibe\ os\ resultados.\r\n\ \ \ \ Suporta\ entrada\ grafica\ e\ textual.\r\n
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\r\n\ M\u00E9todo\ main\ -\ principal\:\ inicia\ um\ programa\ em\ Java\r\n\ @param\ args\ -\ vetor\ de\ strings\ (recebe\ dados\ do\ SO)\r\n
+comment2.params=s1\ s2\ s3
+comment2.target=java.lang.String\ calcular(java.lang.String,\ java.lang.String,\ java.lang.String)
+numComments=3

@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=CalcBasica
+comment0.text=\ Atividade1\:\ calculadora\ modo\ texto\ (console)/\ modo\ grafico\ (janela)\r\n\ \ \ \ Alunos\:\ Giulia\ M.,\ Pedro\ H.,\ Sthefany\ V.,\ Tulio\ G.\r\n\ \ \ \ \r\n\ \ \ \ Classe\ responsavel\ realizar\ operacoes\ matematicas\ basicas,\ \r\n\ \ \ \ incluindo\ soma,\ subtracao,\ multiplicacao,\ divisao,\ fatorial,\ seno\ e\ raiz\ quadrada.\r\n
+comment1.params=operando1\ operador\ operando2
+comment1.target=java.lang.String\ calcular(java.lang.String,\ java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ M\u00E9todo\ calcular\ -\ executa\ a\ opera\u00E7\u00E3o\ desejada\ entre\ operandos.\r\n\ @param\ operando1\ String\ representando\ o\ primeiro\ operando.\r\n\ @param\ operador\ String\ representando\ o\ operador\ matem\u00E1tico.\r\n\ @param\ operando2\ String\ representando\ o\ segundo\ operando\ (ou\ "0"\ para\ opera\u00E7\u00F5es\ un\u00E1rias).\r\n\ @return\ String\ com\ o\ resultado\ formatado\ ou\ mensagem\ de\ erro.\r\n
+comment2.params=str
+comment2.target=boolean\ isNumeric(java.lang.String)
+comment2.text=\r\n\ M\u00E9todo\ isNumeric\ -\ verifica\ se\ a\ string\ representa\ um\ n\u00FAmero\ v\u00E1lido.\r\n\ @param\ str\ String\ a\ ser\ verificada.\r\n\ @return\ true\ se\ for\ num\u00E9rica,\ false\ caso\ contr\u00E1rio.\r\n
+comment3.params=fat
+comment3.target=int\ fatorial(int)
+comment3.text=\r\n\ M\u00E9todo\ fatorial\ -\ calcula\ o\ fatorial\ de\ um\ n\u00FAmero\ inteiro.\r\n\ @param\ fat\ N\u00FAmero\ inteiro\ para\ c\u00E1lculo\ do\ fatorial.\r\n\ @return\ Resultado\ do\ fatorial.\r\n
+comment4.params=angulo
+comment4.target=double\ seno(double)
+comment4.text=\r\n\ M\u00E9todo\ seno\ -\ calcula\ o\ seno\ de\ um\ \u00E2ngulo\ em\ graus.\r\n\ @param\ angulo\ \u00C2ngulo\ em\ graus.\r\n\ @return\ Valor\ do\ seno\ do\ \u00E2ngulo.\r\n
+numComments=5
