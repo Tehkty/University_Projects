@@ -1,0 +1,65 @@
+//A3 - EDL (apenas resolucao das questoes) - Lista Ligada
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//QUESTAO 1:
+//Definir um valor adequado para ghost em uma lista de numerosz inteiros positivos
+#define ghost -1 
+#define terra NULL
+
+typedef struct Celula{
+	int info;
+	struct Celula *next;
+}Celula;
+
+typedef struct Celula{
+	int tamanho;
+	Celula *inicio;
+}Lista;
+
+//QUESTAO 2
+//Implementacao da funcao criarLista (deve criar uma lista vazia)
+Lista criarLista();
+Lista criarLista(){
+	Lista L;
+	L.inicio = terra;
+	L.tamanho = 0;
+	return L;
+}
+
+//QUESTAO 3
+//Implementacao da funcao inserir (acrescenta um item no inicio da lista)
+Lista inserir(Lista, int);
+Lista inserir(Lista L, int y){
+	Celula *nova;
+	nova = malloc(sizeof(Celula));
+	nova -> info = y;
+	nova -> next = L.inicio;
+	L.inicio = nova;
+	L.tamanho++;
+	return L;
+}
+
+//QUESTAO 4
+//Implementacao da funcao contarIguais (devolve a qtd de itens iguais a um valor y)
+int inserir(Lista, int);
+int inserir(Lista L, int y){
+	int cont, Celula *aux;
+	cont = 0;
+	aux = L.inicio;
+	while(aux!=TERRA){
+		if(aux->info == y){
+			cont++
+		}
+	}
+	return cont;
+}
+
+//QUESTAO 5
+//Implementacao da funcao criarListaVazia (deve criar uma lista vazia)
+void criarListaVazia(Lista*);
+void criarListaVazia(Lista*ap){
+	ap -> inicio = terra;
+	ap -> tamanho = 0;
+}
