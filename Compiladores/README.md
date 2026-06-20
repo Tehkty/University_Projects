@@ -1,5 +1,6 @@
 ## MiniPascal Compiler
 Equipe: Isabela Nunes, Pedro Huck, Sthefany Viveiros
+
 Linguagem escolhida: Mini-Pascal
 
 ## Objetivo
