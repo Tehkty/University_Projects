@@ -1,12 +1,8 @@
 ## MiniPascal Compiler
-
-Nome do projeto: MiniPascal Compiler
-Linguagem escolhida: Mini-Pascal
-Ferramentas: Flex, Bison, LLVM, Clang, GCC, NASM e Makefile
 Equipe: Isabela Nunes, Pedro Huck, Sthefany Viveiros
+Linguagem escolhida: Mini-Pascal
 
 ## Objetivo
-
 Desenvolver um compilador completo para a linguagem Mini-Pascal utilizando:
 
 * Flex (Análise Léxica)
